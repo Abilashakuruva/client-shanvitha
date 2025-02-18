@@ -3,6 +3,7 @@ import { API_URL } from '../api'
 
 const Chains = () => {
     const [vendorData, setVendorData] = useState([]);
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     const vendorFirmHandler = async () => {
         try {
@@ -22,10 +23,33 @@ const Chains = () => {
     useEffect(() => {
         vendorFirmHandler()
     }, [])
+
+    const handleScroll = (direction) => {
+        const gallery = document.getElementById("chainGallery");
+        const scrollAmount = 500;
+
+        if (direction === "left"){
+            gallery.scrollTo({
+                left: gallery.scrollLeft - scrollAmount,
+                behavior: "smooth"
+            })
+        } else if (direction === 'right'){
+            gallery.scrollTo({
+                left: gallery.scrollLeft + scrollAmount,
+                behavior: "smooth"
+
+            })
+        }
+    }
     return (
         <>
-            <section className='chainsec'>
-                <h3>Top Restaurant chains in Hyderabad</h3>
+            <div className="btnsec">
+                <button onClick={() => handleScroll("left")}>left</button>
+                <button onClick={() => handleScroll("right")}>right</button>
+            </div>
+            <h3>Top Restaurant chains in Hyderabad</h3>
+
+            <section className='chainsec' id='chainGallery' onScroll={(e) => setScrollPosition(e.target.scrollLeft )}>
                 {vendorData.vendors && vendorData.vendors.map((vendor) => {
                     return (
                         <div className="vendorbox">
@@ -33,7 +57,7 @@ const Chains = () => {
                                 return (
                                     <>
                                         <div>
-                                            {item.firmName}
+                                            {/* {item.firmName}*/}
                                         </div>
                                         <div className="firmimage">
                                             <img src={`${API_URL}/uploads/${item.image}`} />
