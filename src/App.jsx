@@ -2,10 +2,17 @@ import React from 'react'
 import LandingPage from './shanvitha/pages/LandingPage'
 import './App.css'
 
+import { Routes,Route } from 'react-router-dom'
+import ProductMenu from './shanvitha/components/ProductMenu'
+
 const App = () => {
   return (
     <div>
-        <LandingPage/>
+      <Routes>
+        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/products/:firmId/:firmName' element={<ProductMenu/>}/>
+      </Routes>
+        
     </div>
   )
 }
